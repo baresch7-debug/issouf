@@ -55,12 +55,14 @@ export const geminiService = {
     });
 
     try {
-      // Use text.trim() before parsing as recommended in the guidelines.
-      const jsonStr = response.text.trim();
-      return JSON.parse(jsonStr);
-    } catch (e) {
-      console.error("Failed to parse exercises", e);
-      return [];
-    }
+    // On récupère le texte de la réponse de manière sécurisée
+    const responseText = response && typeof response.text === 'function' ? await response.text() : "";
+    
+    // On utilise bien la variable qu'on vient de créer pour le parse
+    return JSON.parse(responseText);
+  } catch (e) {
+    console.error("Failed to parse exercises", e);
+    return [];
+  }
   }
 };
