@@ -55,12 +55,17 @@ export const geminiService = {
     });
 
     try {
-    // On récupère le texte de la réponse de manière sécurisée
-    const responseText = response && typeof response.text === 'function' ? await response.text() : "";
+    // On force TypeScript à accepter que text() existe
+    const responseText = await (response as any).text();
     
-    // On utilise bien la variable qu'on vient de créer pour le parse
+    // On nettoie et on transforme en JSON
     return JSON.parse(responseText);
-  } catch (e) {
+  } catch (e) 
+  {
+    console.error("Failed to parse exercises", e);
+    return [];
+  } 
+  catch (e) {
     console.error("Failed to parse exercises", e);
     return [];
   }
