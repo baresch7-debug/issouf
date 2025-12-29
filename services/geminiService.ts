@@ -54,18 +54,13 @@ export const geminiService = {
       }
     });
 
-    try {
+   try {
     // On force TypeScript à accepter que text() existe
     const responseText = await (response as any).text();
     
     // On nettoie et on transforme en JSON
     return JSON.parse(responseText);
-  } catch (e) 
-  {
-    console.error("Failed to parse exercises", e);
-    return [];
-  } 
-  catch (e) {
+  } catch (e) {
     console.error("Failed to parse exercises", e);
     return [];
   }
